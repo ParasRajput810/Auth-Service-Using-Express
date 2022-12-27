@@ -2,6 +2,9 @@
 const {
   Model
 } = require('sequelize');
+
+const {SALT} = require("../config/serverConfig");
+const bcrypt = require("bcrypt");
 module.exports = (sequelize, DataTypes) => {
   class User_Creds extends Model {
     /**
@@ -33,5 +36,11 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User_Creds',
   });
+
+  User_Creds.beforeCreate((user)=>{
+    const encryptedPassword = bcrypt.hashSync(user.password , SALT);
+    user.password = encryptedPassword;
+    console.log(user.password);
+  })
   return User_Creds;
 };
