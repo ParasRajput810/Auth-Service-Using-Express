@@ -1,6 +1,7 @@
 const UserRepository = require("../repository/user-repository");
 var jwt = require('jsonwebtoken');
 const {JWT_Key} = require("../config/serverConfig");
+const bcrypt = require("bcrypt");
 
 class UserService{
     constructor(){
@@ -33,6 +34,28 @@ class UserService{
         try {
             const user_check = await jwt.verify(user , algo);
             return user_check;
+        } catch (error) {
+            throw {error};
+        }
+    }
+
+    async checkpassword(plainpassword , encryptedpassword){
+        try {
+            return bcrypt.compareSync(plainpassword, encryptedpassword);
+        } catch (error) {
+            throw {error};
+        }
+    }
+
+    async signin(user_email , user_password){
+        try {
+            const user = await this.userrepository.getbyemail(user_email);
+            const password = await this.checkpassword(user_password , user.password);
+            if(!password){
+                throw {error : "Incorrect Password"};
+            }
+            const user_token = await this.createtoken({email:user.email , id : user.id});
+            return user_token;
         } catch (error) {
             throw {error};
         }

@@ -30,6 +30,17 @@ class UserRepository{
             throw {error};
         }
     }
+
+    async getbyemail(useremail){
+        try {
+            const user = await User_Creds.findOne({where : {
+                email:useremail,
+            }})
+            return user;
+        } catch (error) {
+            throw {error};
+        }
+    }
 }
 
 module.exports = UserRepository;
