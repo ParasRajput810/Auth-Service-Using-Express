@@ -19,6 +19,17 @@ class UserRepository{
             throw {error};
         }
     }
+
+    async getbyid(userid){
+        try {
+            const user = await User_Creds.findByPk(userid, {
+                attributes : ["id" , "email"],
+            })
+            return user ;
+        } catch (error) {
+            throw {error};
+        }
+    }
 }
 
 module.exports = UserRepository;
