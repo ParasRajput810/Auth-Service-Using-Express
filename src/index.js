@@ -6,6 +6,9 @@ const apiroutes = require("./router/index");
 // const {User_Creds} = require("./models/index");
 const userrepo = require("./repository/user-repository");
 const userservice = require("./services/user_service");
+const db = require("./models/index");
+const {User_Creds , Role} = require("./models/index");
+const sequelize = require("sequelize");
 
 const setting_server = async() =>{
     const app = express();
@@ -27,6 +30,12 @@ const setting_server = async() =>{
         // const tokencheck = await user_ser.verifytoken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InIxMjNAZ21haWwuY29tIiwiaWQiOiI0IiwiaWF0IjoxNjcyMjAyODczLCJleHAiOjE2NzIyMDY0NzN9.X0e8EdZKZ274oxgUr94QpAXtpLjW6Ddn6yzgDzqzans" , JWT_Key);
 
         // console.log(tokencheck);
+
+        if(process.env.DB_SYNC) {
+            db.sequelize.sync({alter: true});
+        }
+
+        
     })
 }
 
