@@ -30,9 +30,9 @@ class UserService{
         }
     }
 
-    async verifytoken(user , algo){
+    async verifytoken(user){
         try {
-            const user_check = await jwt.verify(user , algo);
+            const user_check = await jwt.verify(user , JWT_Key);
             return user_check;
         } catch (error) {
             throw {error};
@@ -56,6 +56,22 @@ class UserService{
             }
             const user_token = await this.createtoken({email:user.email , id : user.id});
             return user_token;
+        } catch (error) {
+            throw {error};
+        }
+    }
+
+    async isAuthenticated(header){
+        try {
+            const valid_token = await this.verifytoken(header);
+            if(!valid_token){
+                throw {error : "Inavlid token"};
+            }
+            const userid = await this.userrepository.getbyid(valid_token.id);
+            if(!userid){
+                throw {error : "Something went wrong"};
+            }
+            return userid;
         } catch (error) {
             throw {error};
         }

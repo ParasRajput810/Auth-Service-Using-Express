@@ -41,9 +41,28 @@ const signin = async(req,res)=>{
     }
 }
 
+const isAuthenticated = async(req,res)=>{
+    try {
+        const user = await userservice.isAuthenticated(req.headers["x-access-token"]);
+        return res.status(201).json({
+            Success:false,
+            message:"User validation confirmed",
+            data : user,
+            err  :{}
+        })
+    } catch (error) {
+        return res.status(501).json({
+            Success : false,
+            message : "User Creation failed",
+            data : {},
+            err : error
+        })
+    }
+}
 
 
 module.exports = {
     create,
-    signin
+    signin,
+    isAuthenticated,
 }

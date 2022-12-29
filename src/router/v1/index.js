@@ -10,4 +10,6 @@ router.post("/signin",
 user_validation,
 usercontroller.signin);
 
+router.get("/isAuthenticated" , usercontroller.isAuthenticated);
+
 module.exports = router;
