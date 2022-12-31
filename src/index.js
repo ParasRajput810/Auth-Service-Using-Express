@@ -31,10 +31,10 @@ const setting_server = async() =>{
 
         // console.log(tokencheck);
 
-        if(process.env.DB_SYNC) {
-            db.sequelize.sync({alter: true});
-        }
-
+        // if(process.env.DB_SYNC) {
+        //     db.sequelize.sync({alter: true});
+        // }
+        
         
     })
 }

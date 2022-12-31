@@ -76,6 +76,15 @@ class UserService{
             throw {error};
         }
     }
+
+    async setRole(userEmail , roleName){
+        try {
+            const roleassign = await this.userrepository.setRole(userEmail,roleName);
+            return roleassign;
+        } catch (error) {
+            throw {error};
+        }
+    }
 }
 
 module.exports = UserService;

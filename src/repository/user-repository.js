@@ -1,4 +1,4 @@
-const {User_Creds}= require("../models/index");
+const {User_Creds , Role}= require("../models/index");
 
 class UserRepository{
     
@@ -39,6 +39,28 @@ class UserRepository{
             return user;
         } catch (error) {
             throw {error};
+        }
+    }
+
+    async setRole(userEmail , roleName){
+    
+        try {
+        const user = await User_Creds.findOne({
+            where:{
+                email : userEmail.userEmail
+            }
+        })
+        const UserRole = await Role.findOne({
+            where:{
+                name : roleName.roleName
+            }
+        })
+        user.addRole(UserRole);
+        return true   
+        } 
+        catch (error) {
+            console.log(error);
+            throw {error};    
         }
     }
 }

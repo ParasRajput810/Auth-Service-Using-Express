@@ -58,11 +58,32 @@ const isAuthenticated = async(req,res)=>{
             err : error
         })
     }
+
 }
 
+const setRole = async(req , res)=>{
+    try {
+        const roleassign = await userservice.setRole(req.query,req.body);
+        return res.status(201).json({
+            Success:true,
+            message:"Updated user role succesfully",
+            data : roleassign,
+            err  :{}
+        })
+    } catch (error) {
+        return res.status(501).json({
+            Success : false,
+            message : "User Creation failed",
+            data : {},
+            err : error
+        })
+    }
+}
 
 module.exports = {
     create,
     signin,
     isAuthenticated,
+    setRole,
+
 }

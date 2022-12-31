@@ -11,5 +11,6 @@ user_validation,
 usercontroller.signin);
 
 router.get("/isAuthenticated" , usercontroller.isAuthenticated);
+router.patch("/roleSet" , usercontroller.setRole);
 
 module.exports = router;
