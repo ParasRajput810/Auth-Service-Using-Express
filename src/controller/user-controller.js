@@ -13,11 +13,11 @@ const create = async(req,res) =>{
             err :{}
         })
     } catch (error) {
-        return res.status(501).json({
+        return res.status(error.statusCode).json({
             Success : false,
-            message : "User Creation failed",
+            message : error.message,
             data : {},
-            err : error
+            err : error.explanation
         })
     }
 }

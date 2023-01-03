@@ -2,6 +2,7 @@ const UserRepository = require("../repository/user-repository");
 var jwt = require('jsonwebtoken');
 const {JWT_Key} = require("../config/serverConfig");
 const bcrypt = require("bcrypt");
+const ValidationError = require("../utils/validation-error");
 
 class UserService{
     constructor(){
@@ -17,6 +18,9 @@ class UserService{
             })
             return user;
         } catch (error) {
+            if(error.name = "SequelizeValidationError"){
+                throw error;
+            }
             throw {error};
         }
     }
